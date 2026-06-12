@@ -1,8 +1,3 @@
-// app/default-fetch/page.tsx
-
-// This is a Server Component (no "use client" at the top)
-// By default, Next.js caches fetch responses (like force-cache in Next.js 13/14)
-// In Next.js 15+, the default changed to no-store — so this shows both behaviors clearly
 
 async function getProducts() {
   console.log("🟡 DEFAULT FETCH: Fetching from API...");

@@ -1,17 +1,45 @@
-// app/page.tsx
 import Link from "next/link";
 
 export default function Home() {
   return (
-    <main style={{ padding: "2rem" }}>
-      <h1>Fetch Caching Demo</h1>
-      <p>Click each link to see how different fetch cache strategies work:</p>
-      <ul>
-        <li><Link href="/default-fetch">Case 1: Default Fetch (cached)</Link></li>
-        <li><Link href="/no-store">Case 2: No Store (always fresh)</Link></li>
-        <li><Link href="/force-cache">Case 3: Force Cache (always cached)</Link></li>
-        <li><Link href="/isr-revalidate">Case 4: ISR Revalidation (revalidate: 10)</Link></li>
-      </ul>
+    <main className="p-10">
+      <h1 className="text-4xl font-bold mb-6">
+        Authentication Demo
+      </h1>
+
+      <div className="grid md:grid-cols-3 gap-6">
+
+        <Link
+          href="/signup"
+          className="border p-6 rounded shadow"
+        >
+          <h2 className="font-bold">
+            Signup
+          </h2>
+          <p>Create Account</p>
+        </Link>
+
+        <Link
+          href="/login"
+          className="border p-6 rounded shadow"
+        >
+          <h2 className="font-bold">
+            Login
+          </h2>
+          <p>Access Account</p>
+        </Link>
+
+        <Link
+          href="/dashboard"
+          className="border p-6 rounded shadow"
+        >
+          <h2 className="font-bold">
+            Dashboard
+          </h2>
+          <p>Protected Route</p>
+        </Link>
+
+      </div>
     </main>
   );
 }

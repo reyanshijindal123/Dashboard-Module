@@ -1,18 +1,9 @@
-
-
 "use client";
 
 import { useState } from "react";
 
-interface SignupForm {
-  name: string;
-  email: string;
-  password: string;
-  age: string;
-}
-
 export default function SignupPage() {
-  const [form, setForm] = useState<SignupForm>({
+  const [form, setForm] = useState({
     name: "",
     email: "",
     password: "",
@@ -21,113 +12,100 @@ export default function SignupPage() {
 
   const [error, setError] = useState("");
 
-  const validateForm = () => {
-    if (form.name.length < 3) {
-      return "Name must be at least 3 characters";
-    }
-
-    const emailRegex =
-      /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!emailRegex.test(form.email)) {
-      return "Invalid email";
-    }
-
-    if (form.password.length < 6) {
-      return "Password must be at least 6 characters";
-    }
-
-    if (Number(form.age) < 18) {
-      return "Age must be 18+";
-    }
-
-    return null;
-  };
-
   const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
+    e: React.FormEvent
   ) => {
     e.preventDefault();
 
-    const validationError = validateForm();
+    if (form.name.length < 3) {
+      setError("Name must be at least 3 characters");
+      return;
+    }
 
-    if (validationError) {
-      setError(validationError);
+    if (form.password.length < 6) {
+      setError("Password must be at least 6 characters");
       return;
     }
 
     await fetch("/api/signup", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify({
         ...form,
         age: Number(form.age),
       }),
     });
 
-    alert("Signup successful");
+    alert("Signup Successful");
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="flex flex-col gap-4 p-8"
-    >
-      <input
-        placeholder="Name"
-        value={form.name}
-        onChange={(e) =>
-          setForm({
-            ...form,
-            name: e.target.value,
-          })
-        }
-      />
+    <div className="min-h-screen flex justify-center items-center bg-gray-100">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white p-8 rounded-lg shadow-lg w-96"
+      >
+        <h1 className="text-2xl font-bold mb-4">
+          Signup
+        </h1>
 
-      <input
-        placeholder="Email"
-        value={form.email}
-        onChange={(e) =>
-          setForm({
-            ...form,
-            email: e.target.value,
-          })
-        }
-      />
+        <input
+          className="border p-2 w-full mb-3"
+          placeholder="Name"
+          onChange={(e) =>
+            setForm({
+              ...form,
+              name: e.target.value,
+            })
+          }
+        />
 
-      <input
-        type="password"
-        placeholder="Password"
-        value={form.password}
-        onChange={(e) =>
-          setForm({
-            ...form,
-            password: e.target.value,
-          })
-        }
-      />
+        <input
+          className="border p-2 w-full mb-3"
+          placeholder="Email"
+          onChange={(e) =>
+            setForm({
+              ...form,
+              email: e.target.value,
+            })
+          }
+        />
 
-      <input
-        type="number"
-        placeholder="Age"
-        value={form.age}
-        onChange={(e) =>
-          setForm({
-            ...form,
-            age: e.target.value,
-          })
-        }
-      />
+        <input
+          type="password"
+          className="border p-2 w-full mb-3"
+          placeholder="Password"
+          onChange={(e) =>
+            setForm({
+              ...form,
+              password: e.target.value,
+            })
+          }
+        />
 
-      {error && (
-        <p className="text-red-500">{error}</p>
-      )}
+        <input
+          type="number"
+          className="border p-2 w-full mb-3"
+          placeholder="Age"
+          onChange={(e) =>
+            setForm({
+              ...form,
+              age: e.target.value,
+            })
+          }
+        />
 
-      <button type="submit">
-        Signup
-      </button>
-    </form>
+        {error && (
+          <p className="text-red-500 mb-3">
+            {error}
+          </p>
+        )}
+
+        <button
+          className="bg-blue-500 text-white px-4 py-2 rounded w-full"
+        >
+          Signup
+        </button>
+      </form>
+    </div>
   );
 }

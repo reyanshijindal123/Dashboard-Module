@@ -1,6 +1,6 @@
 // app/dashboard/layout.tsx
 
-import Navbar from "@/components/navabr";
+import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/sidebar";
 
 export default function DashboardLayout({
